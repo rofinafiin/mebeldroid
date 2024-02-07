@@ -38,6 +38,9 @@ dependencies:
   dio: ^5.4.0
   shared_preferences: ^2.2.2
   searchfield: ^0.9.0
+  search_app_bar_page: ^2.1.5
+  flutter_search_bar: ^3.0.0
+  animation_search_bar: ^0.0.10
 
 dev_dependencies:
   flutter_test:

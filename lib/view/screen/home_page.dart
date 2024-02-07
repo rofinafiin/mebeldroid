@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   final _subtotalCtl = TextEditingController();
   String _result = '-';
   final ApiServices _dataService = ApiServices();
-  List<Datum> _contactMdl = [];
+  final List<Datum> _contactMdl = [];
   ResponsePost? ctRes;
   ResponseDelete? dlRes;
   bool isEdit = false;
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               onPressed: () {
-                showSearch(context: context, delegate: MySearchDelegate())
+                showSearch(context: context, delegate: MySearchDelegate());
               },
               icon: const Icon(Icons.search),
             ),
@@ -516,6 +516,57 @@ class _HomePageState extends State<HomePage> {
 }
 
 class MySearchDelegate extends SearchDelegate {
+  List<String> categories = [
+    'Meja',
+    'Kursi',
+    'Stik Es Krim',
+    'Lemari',
+    'Papan'
+  ];
   @override
-  List<Widget>
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> matchQuery = [];
+    if (query.isNotEmpty) {
+      for (var item in categories) {
+        if (item.toLowerCase().contains(query.toLowerCase())) {
+          matchQuery.add(item);
+        }
+      }
+    }
+
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(title: Text(result));
+      },
+      itemCount: matchQuery.length,
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    throw UnimplementedError();
+  }
 }
